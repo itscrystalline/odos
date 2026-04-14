@@ -1,13 +1,8 @@
-{
-  pkgs,
-  lib,
-  config,
-  inputs,
-  ...
-}: {
+{pkgs, ...}: {
   packages = [pkgs.git];
   languages.python = {
     enable = true;
+    venv.enable = true;
     uv = {
       enable = true;
       sync.enable = true;

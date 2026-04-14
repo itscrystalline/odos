@@ -1,29 +1,23 @@
+from dataclasses import dataclass
+from user import load, save
+import sqlite3
+from colorama import init as colorama_init
+from colorama import Fore
+from colorama import Style
+
+BOLD = "\033[1m"
+UNDERLINE = "\033[4m"
+
+
 def main():
-    print("My name is Crystal")
-    print("I am 17 years old")
+    colorama_init(autoreset=True)
 
-    print("I am your_age years old")
+    print(
+        f"{Style.BRIGHT}{BOLD}{Fore.BLUE}Welcome to {Fore.GREEN}{UNDERLINE}HeartBuddy"
+    )
+    state = load()
 
-    a = 3
-    b = 4
-    c = 5
-    print(f"sum: {a + b + c}")
-
-    name = "Crystal"
-    print(type(name))
-
-    var = 6
-    var_str = str(var)
-    var_float = float(var)
-
-    foo = True
-    bar = 3.14
-    baz = int(2)
-
-    print(f"Length of my name: {len(name)}")
-
-    for value in range(0, 100, 2):
-        print(value)
+    save(state)
 
 
 if __name__ == "__main__":
