@@ -10,22 +10,31 @@ class User:
     name: str
     password: str
 
+    def __dict__(self):
+        return dataclasses.asdict(self)
+
 
 @dataclass
 class State:
+    path: Path
     users: list[User]
+
+    def save(self):
+        with open(self.path, "w+") as contents:
+            json.dump({"users": self.users}, contents, indent=2)
+
+    def signup(self, user: str, pw: str):
+        self.users.append(User(user, pw))
+
+    def login(self, user: str, pw: str) -> bool:
+        return User(user, pw) in self.users
 
 
 def load(path: Path = Path(".") / "users.json") -> State:
     if path.exists():
         with open(path, "r+") as contents:
-            return State(users=json.load(contents)["users"])
+            return State(path, users=json.load(contents)["users"])
     else:
-        state = State(users=[])
-        save(state)
+        state = State(path, users=[])
+        state.save()
         return state
-
-
-def save(state: State, path: Path = Path(".") / "users.json"):
-    with open(path, "w+") as contents:
-        json.dump(dataclasses.asdict(state), contents, indent=2)
