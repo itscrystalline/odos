@@ -1,3 +1,4 @@
+from assessments import pressure_assessment, cardiac_assessment, diabetes_assessment
 from getpass import getpass
 from dataclasses import dataclass
 from user import State, load
@@ -69,10 +70,19 @@ def main():
     ):
         case 1:
             print(f"{Fore.GREEN}Assessing {UNDERLINE}{Fore.RED}Blood Pressure")
+            sys = float(input(f"{Fore.YELLOW}Systolic  (mmHg):{Style.RESET_ALL} "))
+            dia = float(input(f"{Fore.YELLOW}Diastolic (mmHg):{Style.RESET_ALL} "))
+            age = float(input(f"{Fore.YELLOW}Age:{Style.RESET_ALL} "))
+            pressure_assessment(sys, dia, age)
         case 2:
             print(f"{Fore.GREEN}Assessing {UNDERLINE}{Fore.RED}Cardiac Risks")
+            ldl = float(input(f"{Fore.YELLOW}LDL (mg/dL):{Style.RESET_ALL} "))
+            hdl = float(input(f"{Fore.YELLOW}HDL (mg/dL):{Style.RESET_ALL} "))
+            cardiac_assessment(ldl, hdl)
         case 3:
             print(f"{Fore.GREEN}Assessing {UNDERLINE}{Fore.YELLOW}Diabetes")
+            hba1c = float(input(f"{Fore.YELLOW}HbA1C:{Style.RESET_ALL} "))
+            diabetes_assessment(hba1c)
 
     state.save()
 
