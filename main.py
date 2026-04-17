@@ -2,7 +2,6 @@ from assessments import pressure_assessment, cardiac_assessment, diabetes_assess
 from getpass import getpass
 from dataclasses import dataclass
 from user import State, load
-import sqlite3
 
 from colorama import init as colorama_init  # type: ignore[import-untyped]
 from colorama import Fore
@@ -28,7 +27,7 @@ def ask(question: str, options: list[str], cancel: bool = False) -> int:
             else:
                 print(f"{Fore.RED}Please select an available option!")
                 continue
-        except:
+        except ValueError:
             print(f"{Fore.RED}Please select an available option!")
             continue
 
