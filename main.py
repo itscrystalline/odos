@@ -15,7 +15,9 @@ def ask(question: str, options: list[str], cancel: bool = False) -> int:
         for i, opt in enumerate(options):
             print(f"  {YELLOW}{i + 1}.) {GREEN}{opt}{RESET_ALL}")
 
+        # try catch is also a python feature
         try:
+            #                         v the walrus operator is a recently added python fearure
             if int(not cancel) <= (o := int(input("> "))) < len(options) + 1:
                 return o
             else:
@@ -26,11 +28,13 @@ def ask(question: str, options: list[str], cancel: bool = False) -> int:
             continue
 
 
+# THIS IS NOT AI !!!!!!!!!!!!!!!!!! NONE OF THIS CODE IS AI GENERATED !!!!!
 def main():
     print(f"{BRIGHT}{BOLD}{BLUE}Welcome to {GREEN}{UNDERLINE}HeartBuddy{RESET_ALL}")
     state = load()
 
     while not state.logged_in:
+        # v match statements are also a recently added python fearure
         match ask(
             "Do you want to Sign up or Log in?", ["Sign Up", "Log In"], cancel=True
         ):
@@ -38,6 +42,7 @@ def main():
                 return
             case 1 | 2 as c:
                 username = input("Username: ")
+                #                  v https://docs.python.org/3/library/getpass.html
                 password = getpass("Password (will not show): ")
                 if c == 1:
                     user = state.signup(username, password)
