@@ -12,14 +12,28 @@ UNDERLINE = "\033[4m"
 
 
 def ask(question: str, options: list[str], cancel: bool = False) -> int:
-    print(
-        f"{Fore.CYAN}{question} (Press the number in front of the option and press ENTER.)"
-    )
-    if cancel:
-        print(f"  {Fore.YELLOW}0.) Cancel")
-    for i, opt in enumerate(options):
-        print(f"  {Fore.YELLOW}{i + 1}.) {Fore.GREEN}{opt}")
-    return int(input("> "))
+    while True:
+        print(
+            f"{Fore.CYAN}{question} (Press the number in front of the option and press ENTER.)"
+        )
+        if cancel:
+            print(f"  {Fore.YELLOW}0.) Cancel")
+        for i, opt in enumerate(options):
+            print(f"  {Fore.YELLOW}{i + 1}.) {Fore.GREEN}{opt}")
+
+        try:
+            if (
+                int(not cancel)
+                <= (o := int(input("> ")))
+                < (len(options) + int(cancel))
+            ):
+                return o
+            else:
+                print(f"{Fore.RED}Please select an available option!")
+                continue
+        except:
+            print(f"{Fore.RED}Please select an available option!")
+            continue
 
 
 def main():
@@ -30,20 +44,35 @@ def main():
     )
     state = load()
 
-    match ask("Do you want to Sign up or Log in?", ["Sign Up", "Log In"], cancel=True):
-        case 0:
-            return
-        case 1 | 2 as c:
-            username = input("Username: ")
-            password = getpass("Password (will not show): ")
-            if c == 1:
-                state.signup(username, password)
-                print(f"{Fore.GREEN}Signed up.")
-            elif c == 2:
-                if state.login(username, password):
-                    print(f"{Fore.GREEN}Logged in!")
-                else:
-                    print(f"{Fore.RED}Wrong username or password!")
+    while not state.logged_in:
+        match ask(
+            "Do you want to Sign up or Log in?", ["Sign Up", "Log In"], cancel=True
+        ):
+            case 0:
+                return
+            case 1 | 2 as c:
+                username = input("Username: ")
+                password = getpass("Password (will not show): ")
+                if c == 1:
+                    user = state.signup(username, password)
+                    print(f"{Fore.GREEN}Signed up.")
+                    state.logged_in = user
+                elif c == 2:
+                    if user := state.login(username, password):
+                        print(f"{Fore.GREEN}Logged in!")
+                        state.logged_in = user
+                    else:
+                        print(f"{Fore.RED}Wrong username or password!")
+
+    match ask(
+        "What is your primary concern?", ["Blood Pressure", "Cardiac Risks", "Diabetes"]
+    ):
+        case 1:
+            print(f"{Fore.GREEN}Assessing {UNDERLINE}{Fore.RED}Blood Pressure")
+        case 2:
+            print(f"{Fore.GREEN}Assessing {UNDERLINE}{Fore.RED}Cardiac Risks")
+        case 3:
+            print(f"{Fore.GREEN}Assessing {UNDERLINE}{Fore.YELLOW}Diabetes")
 
     state.save()
 
