@@ -23,11 +23,7 @@ def ask(question: str, options: list[str], cancel: bool = False) -> int:
             print(f"  {Fore.YELLOW}{i + 1}.) {Fore.GREEN}{opt}")
 
         try:
-            if (
-                int(not cancel)
-                <= (o := int(input("> ")))
-                < (len(options) + int(cancel))
-            ):
+            if int(not cancel) <= (o := int(input("> "))) < len(options) + 1:
                 return o
             else:
                 print(f"{Fore.RED}Please select an available option!")
