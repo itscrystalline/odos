@@ -10,9 +10,6 @@ class User:
     name: str
     password: str
 
-    def __dict__(self):
-        return dataclasses.asdict(self)
-
 
 @dataclass
 class State:

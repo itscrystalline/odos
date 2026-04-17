@@ -4,6 +4,4 @@ version = "0.1.0"
 description = "ODOS Class"
 readme = ""
 requires-python = ">=3.13"
-dependencies = [
-    "colorama>=0.4.6",
-]
+dependencies = []
