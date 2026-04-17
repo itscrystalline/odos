@@ -6,38 +6,46 @@ from colorama import Style
 def pressure_assessment(sys: float, dia: float, age: float):
     if age < 40:
         if sys > 140 or dia > 90:
+            handle_bp()
             sys_diag = f"{Fore.RED}High"
         elif sys > 120 or dia > 80:
+            handle_bp()
             sys_diag = f"{Fore.YELLOW}Elevated"
         else:
             sys_diag = f"{Fore.GREEN}Normal"
 
     elif age < 60:
         if sys > 150 or dia > 95:
+            handle_bp()
             sys_diag = f"{Fore.RED}High"
         elif sys > 130 or dia > 85:
+            handle_bp()
             sys_diag = f"{Fore.YELLOW}Elevated"
         else:
             sys_diag = f"{Fore.GREEN}Normal"
 
     else:
         if sys > 160 or dia > 100:
+            handle_bp()
             sys_diag = f"{Fore.RED}High"
         elif sys > 140 or dia > 90:
+            handle_bp()
             sys_diag = f"{Fore.YELLOW}Elevated"
         else:
             sys_diag = f"{Fore.GREEN}Normal"
 
     if dia < 60:
+        handle_bp()
         dia_diag = f"{Fore.CYAN}Low"
     elif dia <= 80:
         dia_diag = f"{Fore.GREEN}Normal"
     elif dia <= 90:
+        handle_bp()
         dia_diag = f"{Fore.YELLOW}Elevated"
     else:
+        handle_bp()
         dia_diag = f"{Fore.RED}High"
 
-    handle_bp()
     print(f"Systolic:  {sys_diag}{Style.RESET_ALL} ({sys} mmHg)")
     print(f"Diastolic: {dia_diag}{Style.RESET_ALL} ({dia} mmHg)")
 
@@ -61,6 +69,7 @@ def cardiac_assessment(ldl: float, hdl: float):
             f"{Fore.CYAN}Low for Women{Style.RESET_ALL}, {Fore.GREEN}Normal for Men"
         )
     else:
+        handle_bp()
         hdl_diag = f"{Fore.CYAN}Low"
 
     print(f"LDL: {ldl_diag} ({ldl} mg/dL)")
